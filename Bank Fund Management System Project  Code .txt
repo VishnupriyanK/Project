@@ -4,10 +4,6 @@
 # code of this project.
 
 
-• Using oops concept, I created a sample project on bank fund management.
-• Implemented multilevel Inheritance to create linkage between all the classes.
-• Using file handling to store and retrieve the data.
-
 s = open(r"C:\Users\HP\OneDrive\Desktop\Python_projects.txt","r+")
 class RB:
     def __init__(self):
