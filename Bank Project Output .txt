@@ -1,0 +1,52 @@
+# Output - Bank Fund Management System.
+
+
+...............WECOME TO BANK FUND MANAGEMENT...............
+
+
+...............THIS IS CHENNAI BRANCH ACCOUNT.................... 
+
+
+The total Account in CHENNAI Branch :  4
+The total fund in CHENNAI Branch :  2000
+
+
+Name : vishnu
+Account Number: 121 and Name : vishnu
+Name : raj
+Account Number: 122 and Name : raj
+Name : vimal
+Account Number: 123 and Name : vimal
+
+
+Enter The Account Number for deposit_amount  : 123
+Enter The Deposit Amount : 1000
+
+
+Enter The Account Number for withdraw_amount : 123
+Enter The Withdraw Amount : 500
+
+
+Enter the Account Number for check_balance :123
+Name : vimal
+ACCOUNT NUMBER : 123
+BALANCE ACCOUNT : 500
+
+
+Enter The Account Number for acc_close : 123
+withdraw first and close account........
+Enter a amount :500
+Account was close.....
+
+ 
+Reserve Bank After CHENNAI Details :  dict_items([('RS', {'ACC': 17, 'FND': 6200})])
+State Bank After CHENNAI Details :  dict_items([('SB', {'ACC': 15, 'FND': 6000})])
+Tamil Nadu After CHENNAI Details :  dict_items([('TN', {'ACC': 12, 'FND': 5500})])
+Chennai Branch Details : dict_items([('TN_AD', {'ACC': 6, 'FND': 2500})])
+
+
+................THIS IS TRICHY BRANCH ACCOUNT..............
+
+
+The total Account in TRICHY Branch :  3
+The total fund in TRICHY Branch :  1500
