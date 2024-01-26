@@ -1,0 +1,460 @@
+
+# BANK FUND MANAGEMENT SYSTEM
+
+# code of this project.
+
+
+• Using oops concept, I created a sample project on bank fund management.
+• Implemented multilevel Inheritance to create linkage between all the classes.
+• Using file handling to store and retrieve the data.
+
+s = open(r"C:\Users\HP\OneDrive\Desktop\Python_projects.txt","r+")
+class RB:
+    def __init__(self):
+        self.rb_total_account_number = 15
+        self.rb_total_fund = 5700 
+        self.stg_rb_data = {}
+        self.stg_rb_data.update({"RS": {'ACC': self.rb_total_account_number, 'FND': self.rb_total_fund}})
+class SB(RB):
+    def __init__(self):
+        super().__init__()
+        self.sb_total_account_number = 13
+        self.sb_total_fund = 5500
+        self.stg_sb_data = {}
+        self.stg_sb_data.update({"SB": {'ACC': self.sb_total_account_number, 'FND': self.sb_total_fund}})
+class TN(SB):
+    def __init__(self):
+        super().__init__()
+        self.tn_total_account_number = 10
+        self.tn_total_fund = 5000 
+        self.stg_tn_data = {}
+        self.stg_tn_data.update({"TN": {"ACC": self.tn_total_account_number, "FND": self.tn_total_fund}})
+print("...............WECOME TO BANK FUND MANAGEMENT...............")  
+print('\n')
+print('...............THIS IS CHENNAI BRANCH ACCOUNT.................... ')
+class AD(TN):
+    def __init__(self):
+        super().__init__()
+        self.ad_total_account_number = 4
+        self.ad_total_fund = 2000
+        self.ad_number = 121
+        self.ad_data = {}
+        self.ad_final = {}
+        self.ad_data_name={}
+        print('\n')
+        print("The total Account in CHENNAI Branch : ",self.ad_total_account_number)
+        print("The total fund in CHENNAI Branch : ",self.ad_total_fund)
+    
+    def Storage(self):
+
+        self.stg_rb_data.update({"RS": {'ACC': self.rb_total_account_number, 'FND': self.rb_total_fund}})
+        self.stg_sb_data.update({"SB": {'ACC': self.sb_total_account_number, 'FND': self.sb_total_fund}})
+        self.stg_tn_data.update({"TN": {'ACC': self.tn_total_account_number, 'FND': self.tn_total_fund}})
+        self.ad_final.update({"TN_AD": {'ACC':self.ad_total_account_number , 'FND': self.ad_total_fund}})
+        
+        a.write(str(self.tn_total_account_number)+'\n')
+        a.write(str(self.tn_total_fund)+'\n')
+        a.write(str(self.sb_total_account_number)+'\n')
+        a.write(str(self.sb_total_fund)+'\n')
+        a.write(str(self.rb_total_account_number)+'\n')
+        a.write(str(self.rb_total_fund)+'\n')
+        
+        print("Reserve Bank After CHENNAI Details : ",self.stg_rb_data.items())
+        print("State Bank After CHENNAI Details : ",self.stg_sb_data.items())
+        print("Tamil Nadu After CHENNAI Details : ",self.stg_tn_data.items())
+        print("Chennai Branch Details :", self.ad_final.items())
+        
+# acc_open_function
+    def acc_open(self,Name):
+        self.ad_name = Name
+        print('Account Number:',self.ad_number,'and Name :',self.ad_name)
+        self.ad_data[self.ad_number] = 0
+        self.ad_data_name[self.ad_number] = self.ad_name
+        self.ad_number += 1
+        self.ad_total_account_number += 1
+        self.tn_total_account_number += 1
+        self.sb_total_account_number += 1
+        self.rb_total_account_number += 1
+        
+# acc_deposit_function
+    def deposit(self,ad_number,ad_money):
+        try:
+            self.ad_data[ad_number]
+        except KeyError:
+            print(ad_number," check the Account number............")
+        else:
+            self.ad_data[ad_number] += ad_money
+            self.ad_total_fund += ad_money
+            self.tn_total_fund += ad_money
+            self.sb_total_fund += ad_money
+            self.rb_total_fund += ad_money
+            
+# acc_withdraw_function
+    def withdraw(self,ad_number,ad_money_withdraw):
+        try:
+            self.ad_data[ad_number]
+        except KeyError:
+            print(ad_number," check the Account number............")
+        else:
+            if self.ad_data[ad_number] >= ad_money_withdraw:
+                self.ad_data[ad_number] -= ad_money_withdraw
+                self.ad_total_fund -= ad_money_withdraw
+                self.tn_total_fund -= ad_money_withdraw
+                self.sb_total_fund -= ad_money_withdraw
+                self.rb_total_fund -= ad_money_withdraw
+            
+# acc_balance_function
+    def ad_balance(self,ad_number):
+        try:
+            if ad_number in self.ad_data_name.keys():
+                print("Name :",self.ad_data_name[ad_number])
+        except KeyError:
+            print("check the account number..............")
+        else:
+            print("ACCOUNT NUMBER :",ad_number)
+            print("BALANCE ACCOUNT :",self.ad_data[ad_number])
+            
+# acc_close_function
+    def acc_close(self,ad_number):
+        try:
+            self.ad_data[ad_number]
+        except KeyError:
+            print(ad_number,"check the Account closed...........")
+        else:
+            if self.ad_data[ad_number] > 0:
+                print("withdraw first and close account........")
+                amount_withdraw = float(input("Enter a amount :"))
+                if 0 <= amount_withdraw <= self.ad_data[ad_number]:
+                    print("Account was close.....")
+                    self.ad_data.pop(ad_number)
+                    self.ad_total_account_number -= 1
+                    self.tn_total_account_number -= 1
+                    self.sb_total_account_number -= 1
+                    self.rb_total_account_number -= 1
+                else:
+                    print("Again withdraw first and close account............")
+            else:
+                self.ad_data.pop(ad_number)
+                self.ad_total_account_number -= 1
+                self.tn_total_account_number -= 1
+                self.sb_total_account_number -= 1
+                self.rb_total_account_number -= 1
+                print("Account was close.....")
+a = open(r"C:\Users\HP\OneDrive\Desktop\Python_projects.txt","r+")
+read = s.readlines()
+call = AD()
+call.tn_total_account_number = int(read[0].replace("\n",""))
+call.tn_total_fund = int(read[1].replace("\n",""))
+call.sb_total_account_number = int(read[2].replace("\n",""))
+call.sb_total_fund = int(read[3].replace("\n",""))
+call.rb_total_account_number = int(read[4].replace("\n",""))
+call.rb_total_fund = int(read[5].replace("\n",""))
+s.close()
+print('\n')
+call.acc_open(input('Name : '))
+call.acc_open(input('Name : '))
+call.acc_open(input('Name : '))
+print('\n')
+call.deposit((int(input("Enter The Account Number for deposit_amount  : "))),int(input("Enter The Deposit Amount : ")))
+print('\n')
+call.withdraw((int(input("Enter The Account Number for withdraw_amount : "))),int(input("Enter The Withdraw Amount : ")))
+print('\n')
+call.ad_balance(int(input("Enter the Account Number for check_balance :")))
+print('\n')
+call.acc_close(int(input("Enter The Account Number for acc_close : ")))
+print('\n ')           
+call.Storage()
+a.close()
+
+print('\n')
+print("................THIS IS TRICHY BRANCH ACCOUNT..............")
+
+b = open(r"C:\Users\HP\OneDrive\Desktop\Python_projects.txt","r+")
+
+
+class VP(TN):
+    def __init__(self):
+        super().__init__()
+        self.vp_total_account_number = 3
+        self.vp_total_fund = 1500
+        self.vp_number = 131
+        self.vp_data = {}
+        self.vp_final = {}
+        self.vp_data_name={}
+        print('\n')
+        print("The total Account in TRICHY Branch : ",self.vp_total_account_number)
+        print("The total fund in TRICHY Branch : ",self.vp_total_fund)
+        
+    def Storage(self):
+        
+        self.stg_rb_data.update({"RS": {'ACC': self.rb_total_account_number, 'FND': self.rb_total_fund}})
+        self.stg_sb_data.update({"SB": {'ACC': self.sb_total_account_number, 'FND': self.sb_total_fund}})
+        self.stg_tn_data.update({"TN": {'ACC': self.tn_total_account_number, 'FND': self.tn_total_fund}})
+        self.vp_final.update({"TN_AD": {'ACC':self.vp_total_account_number , 'FND': self.vp_total_fund}})
+        
+        
+        b.write(str(self.tn_total_account_number)+'\n')
+        b.write(str(self.tn_total_fund)+'\n')
+        b.write(str(self.sb_total_account_number)+'\n')
+        b.write(str(self.sb_total_fund)+'\n')
+        b.write(str(self.rb_total_account_number)+'\n')
+        b.write(str(self.rb_total_fund)+'\n')
+        
+        
+        print("Reserve Bank After TRICHY Details:",self.stg_rb_data.items())
+        print("State Bank After TRICHY Details :",self.stg_sb_data.items())
+        print("Tamil Nadu After TRICHY Details :",self.stg_tn_data.items())
+        
+# acc_open_function
+    def acc_open(self,Name):
+        self.vp_name = Name 
+        print('Account Number:',self.vp_number,'and Name :',self.vp_name)
+        self.vp_data[self.vp_number] = 0
+        self.vp_data_name[self.vp_number] = self.vp_name
+        self.vp_number += 1
+        self.vp_total_account_number += 1
+        self.tn_total_account_number += 1
+        self.sb_total_account_number += 1
+        self.rb_total_account_number += 1
+        
+# acc_deposit_function
+    def deposit(self,vp_number,vp_money):
+        try:
+            self.vp_data[vp_number]
+        except KeyError:
+            print(vp_number," check the Account number............")
+            print(self.vp_data[vp_number])
+        else:
+            self.vp_data[vp_number] += vp_money
+            self.vp_total_fund += vp_money
+            self.tn_total_fund += vp_money
+            self.sb_total_fund += vp_money
+            self.rb_total_fund += vp_money
+
+            
+# acc_withdraw_function
+    def withdraw(self,vp_number,vp_money_withdraw):
+        try:
+            self.vp_data[vp_number]
+        except KeyError:
+            print(vp_number," check the Account number............")
+        else:
+            if self.vp_data[vp_number] >= vp_money_withdraw:
+                self.vp_data[vp_number] -= vp_money_withdraw
+                self.vp_total_fund -= vp_money_withdraw
+                self.tn_total_fund -= vp_money_withdraw
+                self.sb_total_fund -= vp_money_withdraw
+                self.rb_total_fund -= vp_money_withdraw
+
+
+# acc_balance_function
+    def vp_balance(self,vp_number):
+        try:
+            if vp_number in self.vp_data_name.keys():
+                print("Name :",self.vp_data_name[vp_number])
+        except KeyError:
+            print("check the account number..............")
+        else:
+            print("ACCOUNT NUMBER :",vp_number)
+            print("BALANCE ACCOUNT :",self.vp_data[vp_number])
+            
+# acc_close_function
+    def acc_close(self,vp_number):
+        try:
+            self.vp_data[vp_number]
+        except KeyError:
+            print(vp_number,"check the Account closed...........")
+        else:
+            if self.vp_data[vp_number] > 0:
+                print("withdraw first and close account........")
+                amount_withdraw = float(input("Enter a amount :"))
+                if 0 <= amount_withdraw <= self.vp_data[vp_number]:
+                    print("Account was close.....")
+                    self.vp_data.pop(vp_number)
+                    self.vp_total_account_number -= 1
+                    self.tn_total_account_number -= 1
+                    self.sb_total_account_number -= 1
+                    self.rb_total_account_number -= 1
+                else:
+                    print("Again withdraw first and close account............")
+            else:
+                self.vp_data.pop(vp_number)
+                self.vp_total_account_number -= 1
+                self.tn_total_account_number -= 1
+                self.sb_total_account_number -= 1
+                self.rb_total_account_number -= 1
+                print("Account was close.....")
+
+b1 = open(r"C:\Users\HP\OneDrive\Desktop\Python_projects.txt","r+")
+read_vp = b1.readlines()
+call_vp = VP()
+call_vp.tn_total_account_number = int(read_vp[0].replace("\n",""))
+call_vp.tn_total_fund = int(read_vp[1].replace("\n",""))
+call_vp.sb_total_account_number = int(read_vp[2].replace("\n",""))
+call_vp.sb_total_fund = int(read_vp[3].replace("\n",""))
+call_vp.rb_total_account_number = int(read_vp[4].replace("\n",""))
+call_vp.rb_total_fund = int(read_vp[5].replace("\n",""))
+print('\n')
+call_vp.acc_open(input('Name : '))
+call_vp.acc_open(input('Name : '))
+call_vp.acc_open(input('Name : '))
+print('\n')
+call_vp.deposit((int(input("Enter The Account Number for Deposit : "))),int(input("Enter The Deposit Amount : ")))
+print('\n')
+call_vp.withdraw((int(input("Enter The Account Number Withdraw : "))),int(input("Enter The Withdraw Amount : ")))
+print('\n')
+call_vp.vp_balance(int(input("Enter the Account Number for balance :")))
+print('\n')
+call_vp.acc_close(int(input("Enter The Account Number for close: ")))
+print('\n')
+
+call_vp.Storage()
+
+b.close()
+b1.close()
+
+
+print('\n')
+print("................THIS IS COMIBATORE BRANCH ACCOUNT..............")
+
+c = open(r"C:\Users\HP\OneDrive\Desktop\Python_projects.txt","r+")
+
+
+class GDY(TN):
+    def __init__(self):
+        super().__init__()
+        self.gdy_total_account_number = 3
+        self.gdy_total_fund = 1500
+        self.gdy_number = 141
+        self.gdy_data = {}
+        self.gdy_final = {}
+        self.gdy_data_name={}
+        print('\n')
+        print("The total Account in Comibatore Branch : ",self.gdy_total_account_number)
+        print("The total fund in Comibatore Branch : ",self.gdy_total_fund)
+        
+    def Storage(self):
+        
+        self.stg_rb_data.update({"RS": {'ACC': self.rb_total_account_number, 'FND': self.rb_total_fund}})
+        self.stg_sb_data.update({"SB": {'ACC': self.sb_total_account_number, 'FND': self.sb_total_fund}})
+        self.stg_tn_data.update({"TN": {'ACC': self.tn_total_account_number, 'FND': self.tn_total_fund}})
+        self.gdy_final.update({"TN_AD": {'ACC':self.gdy_total_account_number , 'FND': self.gdy_total_fund}})
+        
+        c.write(str(self.tn_total_account_number)+'\n')
+        c.write(str(self.tn_total_fund)+'\n')
+        c.write(str(self.sb_total_account_number)+'\n')
+        c.write(str(self.sb_total_fund)+'\n')
+        c.write(str(self.rb_total_account_number)+'\n')
+        c.write(str(self.rb_total_fund)+'\n')
+        
+        print("Reserve Bank After COMIBATORE Details:",self.stg_rb_data.items())
+        print("State Bank After COMIBATORE Details :",self.stg_sb_data.items())
+        print("Tamil Nadu After COMIBATORE Details :",self.stg_tn_data.items())
+        
+        
+# acc_open_function
+    def acc_open(self,Name):
+        self.gdy_name = Name 
+        print('Account Number:',self.gdy_number,'and Name :',self.gdy_name)
+        self.gdy_data[self.gdy_number] = 0
+        self.gdy_data_name[self.gdy_number] = self.gdy_name
+        self.gdy_number += 1
+        self.gdy_total_account_number += 1
+        self.tn_total_account_number += 1
+        self.sb_total_account_number += 1
+        self.rb_total_account_number += 1
+
+# acc_deposit_function
+    def deposit(self,gdy_number,gdy_money):
+        try:
+            self.gdy_data[gdy_number]
+        except KeyError:
+            print(gdy_number," check the Account number............")
+            print(self.gdy_data[gdy_number])
+        else:
+            self.gdy_data[gdy_number] += gdy_money
+            self.gdy_total_fund += gdy_money
+            self.tn_total_fund += gdy_money
+            self.sb_total_fund += gdy_money
+            self.rb_total_fund += gdy_money
+        
+# acc_withdraw_function
+    def withdraw(self,gdy_number,gdy_money_withdraw):
+        try:
+            self.gdy_data[gdy_number]
+        except KeyError:
+            print(gdy_number," check the Account number............")
+        else:
+            if self.gdy_data[gdy_number] >= gdy_money_withdraw:
+                self.gdy_data[gdy_number] -= gdy_money_withdraw
+                self.gdy_total_fund -= gdy_money_withdraw
+                self.tn_total_fund -= gdy_money_withdraw
+                self.sb_total_fund -= gdy_money_withdraw
+                self.rb_total_fund -= gdy_money_withdraw
+        
+# acc_balance_function
+    def gdy_balance(self,gdy_number):
+        try:
+            if gdy_number in self.gdy_data_name.keys():
+                print("Name :",self.gdy_data_name[gdy_number])
+        except KeyError:
+            print("check the account number..............")
+        else:
+            print("ACCOUNT NUMBER :",gdy_number)
+            print("BALANCE ACCOUNT :",self.gdy_data[gdy_number])
+            
+# acc_close_function
+    def acc_close(self,gdy_number):
+        try:
+            self.gdy_data[gdy_number]
+        except KeyError:
+            print(gdy_number,"check the Account closed...........")
+        else:
+            if self.gdy_data[gdy_number] > 0:
+                print("withdraw first and close account........")
+                amount_withdraw = float(input("Enter a amount :"))
+                if 0 <= amount_withdraw <= self.gdy_data[gdy_number]:
+                    print("Account was close.....")
+                    self.gdy_data.pop(gdy_number)
+                    self.gdy_total_account_number -= 1
+                    self.tn_total_account_number -= 1
+                    self.sb_total_account_number -= 1
+                    self.rb_total_account_number -= 1
+                else:
+                    print("Again withdraw first and close account............")
+            else:
+                self.gdy_data.pop(gdy_number)
+                self.gdy_total_account_number -= 1
+                self.tn_total_account_number -= 1
+                self.sb_total_account_number -= 1
+                self.rb_total_account_number -= 1
+                print("Account was close.....")
+
+c1 = open(r"C:\Users\HP\OneDrive\Desktop\Python_projects.txt","r+")
+read_gdy = c1.readlines()
+call_gdy = GDY()
+call_gdy.tn_total_account_number = int(read_gdy[0].replace("\n",""))
+call_gdy.tn_total_fund = int(read_gdy[1].replace("\n",""))
+call_gdy.sb_total_account_number = int(read_gdy[2].replace("\n",""))
+call_gdy.sb_total_fund = int(read_gdy[3].replace("\n",""))
+call_gdy.rb_total_account_number = int(read_gdy[4].replace("\n",""))
+call_gdy.rb_total_fund = int(read_gdy[5].replace("\n",""))
+print('\n')
+call_gdy.acc_open(input('Name : '))
+call_gdy.acc_open(input('Name : '))
+call_gdy.acc_open(input('Name : '))
+print('\n')
+call_gdy.deposit((int(input("Enter The Account Number for Deposit : "))),int(input("Enter The Deposit Amount : ")))
+print('\n')
+call_gdy.withdraw((int(input("Enter The Account Number for Withdraw : "))),int(input("Enter The Withdraw Amount : ")))
+print('\n')
+call_gdy.gdy_balance(int(input("Enter the Account Number for balance:")))
+print('\n')
+call_gdy.acc_close(int(input("Enter The Account Number for close: ")))
+print('\n')
+call_gdy.Storage()
+c.close()
+c1.close()
+
+
+
